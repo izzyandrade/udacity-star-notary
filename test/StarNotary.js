@@ -17,3 +17,9 @@ it('has correct name', async () => {
   let starName = await instance.starName.call(); // Calling the starName property
   assert.equal(starName, "Izzy's Star"); // Assert if the starName property was initialized correctly
 });
+
+it('can be claimed', async () => {
+  let instance = await StarNotary.deployed();
+  await instance.claimStar({ from: owner });
+  assert.equal(await instance.starOwner.call(), owner);
+});
