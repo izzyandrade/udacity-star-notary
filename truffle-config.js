@@ -1,7 +1,8 @@
 module.exports = {
   networks: {
     develop: {
-      port: 8545,
+      port: 9545,
+      network_id: 5777,
     },
 
     // Another network with more advanced options...
