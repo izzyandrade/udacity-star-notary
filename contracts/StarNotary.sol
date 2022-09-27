@@ -3,6 +3,8 @@ pragma solidity >=0.8.7;
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 
 contract StarNotary is ERC721 {
+    constructor() public ERC721("Star Notary", "STAR") {}
+
     struct Star {
         string name;
     }
@@ -10,14 +12,10 @@ contract StarNotary is ERC721 {
     mapping(uint256 => Star) public tokenIdToStarInfo;
     mapping(uint256 => uint256) public starsForSale;
 
-    constructor() ERC721("StarNotary", "STAR") {}
-
-    // Create Star using the Struct
     function createStar(string memory _name, uint256 _tokenId) public {
-        // Passing the name and tokenId as a parameters
-        Star memory newStar = Star(_name); // Star is an struct so we are creating a new Star
-        tokenIdToStarInfo[_tokenId] = newStar; // Creating in memory the Star -> tokenId mapping
-        _mint(msg.sender, _tokenId); // _mint assign the the star with _tokenId to the sender address (ownership)
+        Star memory newStar = Star(_name);
+        tokenIdToStarInfo[_tokenId] = newStar;
+        _mint(msg.sender, _tokenId);
         approve(address(this), _tokenId);
     }
 
@@ -44,5 +42,28 @@ contract StarNotary is ERC721 {
         if (msg.value > starCost) {
             payable(msg.sender).transfer(msg.value - starCost);
         }
+    }
+
+    // Implement Task 1 lookUptokenIdToStarInfo
+    function lookUptokenIdToStarInfo(uint _tokenId)
+        public
+        view
+        returns (string memory)
+    {
+        //1. You should return the Star saved in tokenIdToStarInfo mapping
+    }
+
+    // Implement Task 1 Exchange Stars function
+    function exchangeStars(uint256 _tokenId1, uint256 _tokenId2) public {
+        //1. Passing to star tokenId you will need to check if the owner of _tokenId1 or _tokenId2 is the sender
+        //2. You don't have to check for the price of the token (star)
+        //3. Get the owner of the two tokens (ownerOf(_tokenId1), ownerOf(_tokenId2)
+        //4. Use _transferFrom function to exchange the tokens.
+    }
+
+    // Implement Task 1 Transfer Stars
+    function transferStar(address _to1, uint256 _tokenId) public {
+        //1. Check if the sender is the ownerOf(_tokenId)
+        //2. Use the transferFrom(from, to, tokenId); function to transfer the Star
     }
 }
