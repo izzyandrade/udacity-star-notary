@@ -3,7 +3,7 @@ pragma solidity >=0.8.7;
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 
 contract StarNotary is ERC721 {
-    constructor() public ERC721("Star Notary", "STAR") {}
+    constructor() ERC721("Star Notary", "STAR") {}
 
     struct Star {
         string name;
@@ -19,7 +19,6 @@ contract StarNotary is ERC721 {
         approve(address(this), _tokenId);
     }
 
-    // Putting an Star for sale (Adding the star tokenid into the mapping starsForSale, first verify that the sender is the owner)
     function putStarUpForSale(uint256 _tokenId, uint256 _price) public {
         require(
             ownerOf(_tokenId) == msg.sender,
@@ -37,7 +36,7 @@ contract StarNotary is ERC721 {
             ownerAddress,
             msg.sender,
             _tokenId
-        ); // We can't use _addTokenTo or_removeTokenFrom functions, now we have to use transferFrom
+        );
         payable(ownerAddress).transfer(starCost);
         if (msg.value > starCost) {
             payable(msg.sender).transfer(msg.value - starCost);
@@ -50,10 +49,13 @@ contract StarNotary is ERC721 {
         view
         returns (string memory)
     {
-        //1. You should return the Star saved in tokenIdToStarInfo mapping
+        require(
+            bytes(tokenIdToStarInfo[_tokenId].name).length != 0,
+            "No star was found!"
+        );
+        return tokenIdToStarInfo[_tokenId].name;
     }
 
-    // Implement Task 1 Exchange Stars function
     function exchangeStars(uint256 _tokenId1, uint256 _tokenId2) public {
         //1. Passing to star tokenId you will need to check if the owner of _tokenId1 or _tokenId2 is the sender
         //2. You don't have to check for the price of the token (star)

@@ -31,12 +31,28 @@ const App = {
     status.innerHTML = message;
   },
 
+  setFoundStar: function (message) {
+    const status = document.getElementById('foundStar');
+    status.innerHTML = message;
+  },
+
   createStar: async function () {
     const { createStar } = this.meta.methods;
     const name = document.getElementById('starName').value;
     const id = document.getElementById('starId').value;
     await createStar(name, id).send({ from: this.account });
     App.setStatus('New Star Owner is ' + this.account + '.');
+  },
+
+  searchStar: async function () {
+    const { lookUptokenIdToStarInfo } = this.meta.methods;
+    const starId = document.getElementById('searchStarId').value;
+    try {
+      const star = await lookUptokenIdToStarInfo(starId).call();
+      App.setFoundStar('Found star: ' + star);
+    } catch (err) {
+      App.setFoundStar('No star was found!');
+    }
   },
 };
 
