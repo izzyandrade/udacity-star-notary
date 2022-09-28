@@ -62,3 +62,31 @@ it('Lets user buy star if it is up for sale', async () => {
   });
   assert.equal(await instance.ownerOf.call(tokenId), buyerAccount);
 });
+
+// Implement Task 2 Add supporting unit tests
+
+it('can add the star name and star symbol properly', async () => {
+  let instance = await StarNotary.deployed();
+  let name = await instance.name.call();
+  let symbol = await instance.symbol.call();
+  assert.equal(name, 'Star Notary');
+  assert.equal(symbol, 'STAR');
+});
+
+it('lets 2 users exchange stars', async () => {
+  // 1. create 2 Stars with different tokenId
+  // 2. Call the exchangeStars functions implemented in the Smart Contract
+  // 3. Verify that the owners changed
+});
+
+it('lets a user transfer a star', async () => {
+  // 1. create a Star with different tokenId
+  // 2. use the transferStar function implemented in the Smart Contract
+  // 3. Verify the star owner changed.
+});
+
+it('lookUptokenIdToStarInfo test', async () => {
+  // 1. create a Star with different tokenId
+  // 2. Call your method lookUptokenIdToStarInfo
+  // 3. Verify if you Star name is the same
+});
