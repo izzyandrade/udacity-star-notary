@@ -36,6 +36,11 @@ const App = {
     status.innerHTML = message;
   },
 
+  setTransferredStar: function (message) {
+    const status = document.getElementById('transferredStar');
+    status.innerHTML = message;
+  },
+
   createStar: async function () {
     const { createStar } = this.meta.methods;
     const name = document.getElementById('starName').value;
@@ -45,13 +50,27 @@ const App = {
   },
 
   searchStar: async function () {
-    const { lookUptokenIdToStarInfo } = this.meta.methods;
+    const { lookUptokenIdToStarInfo, ownerOf } = this.meta.methods;
     const starId = document.getElementById('searchStarId').value;
+    var star;
     try {
-      const star = await lookUptokenIdToStarInfo(starId).call();
-      App.setFoundStar('Found star: ' + star);
+      star = await lookUptokenIdToStarInfo(starId).call();
     } catch (err) {
       App.setFoundStar('No star was found!');
+    }
+    const starOwner = await ownerOf(starId).call();
+    App.setFoundStar('Found star: ' + star + ' / Owned by: ' + starOwner);
+  },
+
+  transferStar: async function () {
+    const { transferStar } = this.meta.methods;
+    const starId = document.getElementById('transferStarId').value;
+    const toAddress = document.getElementById('transferStarToAddress').value;
+    try {
+      await transferStar(toAddress, starId).send({ from: this.account });
+      App.setTransferredStar('Transferred star ' + starId + 'to: ' + toAddress);
+    } catch (err) {
+      App.setTransferredStar("You can't transfer this star!");
     }
   },
 };

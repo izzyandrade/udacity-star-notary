@@ -22,13 +22,20 @@
     <br><br>
     <h1>Search a Star</h1>
     <br><label for="searchStarId">Star ID:</label><input type="text" id="searchStarId"></input>
-    <br><br><button id="createStar" onclick="App.searchStar()">Search Star</button>
+    <br><br><button id="searchStar" onclick="App.searchStar()">Search Star</button>
+    <br><br>
+    <h1>Transfer a Star</h1>
+    <br><label for="transferStarId">Star ID:</label><input type="text" id="transferStarId"></input>
+    <br><label for="transferStarToAddress">To Address:</label><input type="text" id="transferStarToAddress"></input>
+    <br><br><button id="transferStar" onclick="App.transferStar()">Transfer Star</button>
     <br><br>
     <br>
 
     <span id="status"></span>
     <br/>
     <span id="foundStar"></span>
+    <br/>
+    <span id="transferredStar"></span>
 
     <br>
     <script src="index.js"></script>
