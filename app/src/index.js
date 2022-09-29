@@ -41,6 +41,11 @@ const App = {
     status.innerHTML = message;
   },
 
+  setExchangedStars: function (message) {
+    const status = document.getElementById('exchangedStars');
+    status.innerHTML = message;
+  },
+
   createStar: async function () {
     const { createStar } = this.meta.methods;
     const name = document.getElementById('starName').value;
@@ -71,6 +76,20 @@ const App = {
       App.setTransferredStar('Transferred star ' + starId + 'to: ' + toAddress);
     } catch (err) {
       App.setTransferredStar("You can't transfer this star!");
+    }
+  },
+
+  exchangeStars: async function () {
+    const { exchangeStars } = this.meta.methods;
+    const starId1 = document.getElementById('exchangeStarsId1').value;
+    const starId2 = document.getElementById('exchangeStarsId2').value;
+    try {
+      await exchangeStars(starId1, starId2).send({ from: this.account });
+      App.setExchangedStars(
+        'Stars ' + starId1 + ' and ' + starId2 + ' were exchanged!'
+      );
+    } catch (err) {
+      App.setExchangedStars("You can't exchange these stars!");
     }
   },
 };

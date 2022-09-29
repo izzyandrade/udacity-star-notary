@@ -29,6 +29,13 @@
     <br><label for="transferStarToAddress">To Address:</label><input type="text" id="transferStarToAddress"></input>
     <br><br><button id="transferStar" onclick="App.transferStar()">Transfer Star</button>
     <br><br>
+    <h1>Exchange a Star</h1>
+    <br>
+      <label for="transferStarId">Your Star ID:</label><input type="text" id="exchangeStarsId1"></input>
+      <label for="transferStarToAddress">Exchangeable Star ID:</label><input type="text" id="exchangeStarsId2"></input>
+    <br><br>
+      <button id="transferStar" onclick="App.exchangeStars()">Exchange Starr</button>
+    <br><br>
     <br>
 
     <span id="status"></span>
@@ -36,6 +43,8 @@
     <span id="foundStar"></span>
     <br/>
     <span id="transferredStar"></span>
+    <br/>
+    <span id="exchangedStars"></span>
 
     <br>
     <script src="index.js"></script>
