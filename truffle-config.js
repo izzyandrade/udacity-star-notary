@@ -1,3 +1,12 @@
+const HDWalletProvider = require('@truffle/hdwallet-provider');
+
+const goerliURL =
+  'https://goerli.infura.io/v3/d463e5ba89224a45ab3af3f32eaf0cb4';
+const mnemonicMetamask =
+  'pudding concert ignore hold travel property rifle salon announce pioneer predict dynamic';
+const mnemonicLocal =
+  'above verb heavy fetch where loop magic thunder tone off warm oak';
+
 module.exports = {
   networks: {
     develop: {
@@ -10,15 +19,18 @@ module.exports = {
       network_id: '*', // Any network (default: none)
     },
 
-    // Another network with more advanced options...
-    // advanced: {
-    // port: 8777,             // Custom port
-    // network_id: 1342,       // Custom network
-    // gas: 8500000,           // Gas sent with each transaction (default: ~6700000)
-    // gasPrice: 20000000000,  // 20 gwei (in wei) (default: 100 gwei)
-    // from: <address>,        // Account to send txs from (default: accounts[0])
-    // websockets: true        // Enable EventEmitter interface for web3 (default: false)
-    // },
+    goerli: {
+      // must be a thunk, otherwise truffle commands may hang in CI
+      provider: () =>
+        new HDWalletProvider({
+          providerOrUrl: goerliURL,
+          mnemonic: {
+            phrase: mnemonicMetamask,
+          },
+          addressIndex: 0,
+        }),
+      network_id: '5',
+    },
 
     // Useful for deploying to a public network.
     // NB: It's important to wrap the provider as a function.
